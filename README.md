@@ -1,4 +1,4 @@
-`# Gerador de QR Code de Pagamento em Go
+# Gerador de QR Code de Pagamento em Go
 
 Este projeto é uma CLI em Go que simula a criação de um QR Code de pagamento. Ele recebe os dados de um pagamento, registra a transação em um banco de dados PostgreSQL e gera uma imagem de QR Code contendo o ID único da transação.
 
