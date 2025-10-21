@@ -1,0 +1,5 @@
+*.exe
+.db
+.png
+.vscode/
+.idea/
