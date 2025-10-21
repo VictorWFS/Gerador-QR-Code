@@ -2,11 +2,13 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"os"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
+	"github.com/skip2/go-qrcode"
 )
 
 type Pagamento struct {
@@ -83,4 +85,19 @@ func main() {
 	}
 	fmt.Printf("Pagamento registrado no banco com ID: %d\n", id)
 	fmt.Printf("Dados recebidos: Chave =[%s], Valor=[%.2f]\n", *chave, *valor)
+
+	payload, err := json.Marshal(QRPayload{TransacaoId: id})
+	if err != nil {
+		fmt.Println("Erro ao gerar o payload JSON: ", err)
+		os.Exit(1)
+	}
+
+	nomeArquivo := "pagamento.png"
+	err = qrcode.WriteFile(string(payload), qrcode.Medium, 256, nomeArquivo)
+	if err != nil {
+		fmt.Println("Erro ao gerar o arquivo QR Code: ", err)
+		os.Exit(1)
+	}
+
+	fmt.Printf("\n✅ QR Code gerado com sucesso e salvo como '%s'! \n ", nomeArquivo)
 }
